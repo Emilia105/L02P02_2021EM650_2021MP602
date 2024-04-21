@@ -13,7 +13,7 @@
                                         <tr>
                                             <td>@libro.nombre</td>
                                             <td>@libro.nombreAutor</td>
-                                            <td>@libro.precioL</td>
+                                            <td>$@libro.precioL</td>
                                             <td class="text-end">
                                                 <form asp-controller="Libros" asp-action="AgregarLibros" method="post">
                                                     <input type="hidden" name="IdPedido" value="@ViewData["IdPedido"]" />
