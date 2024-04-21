@@ -1,20 +1,77 @@
 ﻿<form asp-action="SeleccionarLibros">
     <div class="container-fluid py-5">
         <div class="row">
-            <div class="form-group row mb-4">
-                <h3 style="color: #525AF2"></h3>
-                <div class="col-sm-6">
-                    
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>Libros</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <table class="table">
+                                    <tbody>
+                                        @foreach (var libro in (IEnumerable<dynamic>)ViewData["libros"])
+                                        {
+                                            <tr>
+                                                <td>@libro.nombre</td>
+                                                <td class="text-end">
+                                                    <button type="button" class="btn btn-success">
+                                                        @Html.ActionLink("+Agregar", "Index", "ComentariosLibro", new { id = libro.id }, new { @class = "text-white text-decoration-none" })
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-6">
+            </div>
+            <div class="col-sm-6">
+                
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5>Total Libros</h5>
+                    </div>
+                    <div class="col-sm-6 d-flex justify-content-end">
+                        
+                        
+                        <style>
+                            /* Estilos para el círculo */
+                            .circle {
+                                width: 30px;
+                                height: 30px;
+                                border-radius: 50%;
+                                background-color: #525AF2; /* Cambia el color de fondo según lo desees */
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                color: white; /* Color del texto dentro del círculo */
+                                font-weight: bold; /* Puedes ajustar el peso de la fuente según tus preferencias */
+                            }
+                        </style>
+                        
 
-                </div>
+                            <!-- Círculo con número -->
+                            <div class="circle">
+                                3
+                            </div>
+
+                    </div>
+                </row>
+                
             </div>
-            <div class="form-group row mb-4">
-                <div class="col-sm-12">
-                    <input type="submit" class="btn btn-success w-100" value="Iniciar Venta"></input>
-                </div>
-            </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Contenido de la primera columna -->
+                        <p>Total (USD)</p>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-end">
+                        <!-- Contenido de la segunda columna -->
+                        <p>$25</p>
+                    </div>
+
+                    <input type="submit" class="btn btn-success w-100 text-black"  style="background-color:#7CC6ED" value="Completar"></input>
         </div>
     </div>
 
