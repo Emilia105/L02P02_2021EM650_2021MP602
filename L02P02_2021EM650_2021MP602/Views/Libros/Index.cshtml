@@ -13,11 +13,17 @@
                                         {
                                             <tr>
                                                 <td>@libro.nombre</td>
+                                                
                                                 <td class="text-end">
+                                                    
                                                     <button type="button" class="btn btn-success">
+
                                                         @Html.ActionLink("+Agregar", "Index", "ComentariosLibro", new { id = libro.id }, new { @class = "text-white text-decoration-none" })
+
                                                     </button>
+                                                    
                                                 </td>
+
                                             </tr>
                                         }
                                     </tbody>
