@@ -1,144 +1,124 @@
-﻿
-<form>
+﻿@{
+
+    Cliente? c = (Cliente?)ViewData["cliente"];
+}
+
+
+<div class="container py-5">
     <h1> Proceso de venta</h1>
-    
-    <div class="container">
-        
+    @if (ViewData["venta_cerrada"] != null && (Boolean?)ViewData["venta_cerrada"] == true)
+    {
         <div class="row">
-            <div class="col-md-6">
-
-                <!-- Contenido de la primera columna -->
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Datos del cliente</h3>
-                        <div class="row">
-                            <div class=" form-group row mb-4">
-                                <div class="col-sm-6">
-                                    @Html.Label("lblNombre", "Nombre")
-                                    @Html.TextBox("Nombre", "", new { @class = "form-control" })
-                                </div>
-                                <div class="col-sm-6">
-                                    @Html.Label("lblApellido", "Apellido")
-                                    @Html.TextBox("Apellido", "", new { @class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="form-group row mb-4">
-                                <div class="col-sm-12">
-                                    @Html.Label("lblEmail", "Email")
-                                    @Html.TextBox("Email", "", new { @class = "form-control" })
-                                </div>
-                            </div>
-                            <div class="form-group row mb-4">
-                                <div class="col-sm-12">
-                                    @Html.Label("lblDireccion", "Direccion")
-                                    @Html.TextBox("Direccion", "", new { @class = "form-control" })
-                                </div>
-                            </div>
-                            
-
-
-
-                        </div>
-                                
-                        
-
-
-
-                    </div>
+            <div class="col-md-12">
+                <div class="alert alert-success" role="alert">
+                    La venta fue cerrada exitosamente!
                 </div>
             </div>
-            <div class="col-md-6">
-
-
-
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h5>Total Libros</h5>
-                    </div>
-                    <div class="col-sm-6 d-flex justify-content-end">
-
-
-                        <style>
-                            /* Estilos para el círculo */
-                            .circle {
-                                width: 30px;
-                                height: 30px;
-                                border-radius: 50%;
-                                background-color: #525AF2; /* Cambia el color de fondo según lo desees */
-                                display: flex;
-                                justify-content: center;
-                                align-items: center;
-                                color: white; /* Color del texto dentro del círculo */
-                                font-weight: bold; /* Puedes ajustar el peso de la fuente según tus preferencias */
-                            }
-                        </style>
-
-
-                        <!-- Círculo con número -->
-                        <div class="circle">
-                            3
-                        </div>
-
-                    </div>
-                    </row>
-
-                </div>
-                <container>
-
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Contenido de la primera columna -->
+            <div class="card">
+                <div class="card-body">
+                    <h3>Datos del cliente</h3>
                     <div class="row">
-                        <div class="col-md-6">
-                            <!-- Contenido de la primera columna -->
-                            <h5>Nombre del libro 1</h5>
-                            <p>Autor</p>
+                        <div class=" form-group row mb-4">
+                            <div class="col-sm-6">
+                                @Html.Label("lblNombre", "Nombre")
+                                @Html.TextBox("Nombre", c?.Nombre ?? "", new { @class = "form-control", disabled = true })
+                            </div>
+                            <div class="col-sm-6">
+                                @Html.Label("lblApellido", "Apellido")
+                                @Html.TextBox("Apellido", c?.Apellido ?? "", new { @class = "form-control", disabled = true })
+                            </div>
                         </div>
-                        
-                        <div class="col-md-6 d-flex justify-content-end">
-                            <!-- Contenido de la segunda columna -->
-                            <p>$12</p>
+                        <div class="form-group row mb-4">
+                            <div class="col-sm-12">
+                                @Html.Label("lblEmail", "Email")
+                                @Html.TextBox("Email", c?.Email ?? "", new { @class = "form-control", disabled = true })
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <!-- Contenido de la primera columna -->
-                            <h5>Nombre del libro 2</h5>
-                            <p>Autor</p>
+                        <div class="form-group row mb-4">
+                            <div class="col-sm-12">
+                                @Html.Label("lblDireccion", "Direccion")
+                                @Html.TextBox("Direccion", c?.Direccion ?? "", new { @class = "form-control", disabled = true })
+                            </div>
                         </div>
-
-                        <div class="col-md-6 d-flex justify-content-end">
-                            <!-- Contenido de la segunda columna -->
-                            <p>$8</p>
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Contenido de la primera columna -->
-                            <h5>Nombre del libro 3</h5>
-                            <p>Autor</p>
-                        </div>
-
-                        <div class="col-md-6 d-flex justify-content-end">
-                            <!-- Contenido de la segunda columna -->
-                            <p>$5</p>
-                        </div>
-                        <div class="col-md-6">
-                            <!-- Contenido de la primera columna -->
-                           
-                            <p>Total (USD)</p>
-                        </div>
-
-                        <div class="col-md-6 d-flex justify-content-end">
-                            <!-- Contenido de la segunda columna -->
-                            <p>$25</p>
-                        </div>
-                        
                     </div>
-                    
-                    <input type="submit" class="btn btn-success w-100 text-black" style="background-color:#7CC6ED" value="Completar"></input>
-
-                </container>
-                
+                </div>
             </div>
+        </div>
+        <div class="col-md-6">
 
 
 
+            <div class="row pb-3">
+                <div class="col-sm-6">
+                    <h5 style="color: #525AF2">Carrito</h5>
+                </div>
+                <div class="col-sm-6 d-flex justify-content-end">
+
+
+                    <style>
+                        /* Estilos para el círculo */
+                        .circle {
+                            width: 30px;
+                            height: 30px;
+                            border-radius: 50%;
+                            background-color: #525AF2; /* Cambia el color de fondo según lo desees */
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            color: white; /* Color del texto dentro del círculo */
+                            font-weight: bold; /* Puedes ajustar el peso de la fuente según tus preferencias */
+                        }
+                    </style>
+
+
+                    <!-- Círculo con número -->
+                    <div class="circle">
+                        @ViewData["total"]
+                    </div>
+
+                </div>
+                </row>
+
+            </div>
+            <div class="container">
+                <div class="row">
+                    @foreach (var libro in (IEnumerable<dynamic>)ViewData["libros"])
+                    {
+                        <div class="col-md-6">
+                            <!-- Contenido de la primera columna -->
+                            <h5>@libro.nombre</h5>
+                            <p>@libro.autor</p>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-end">
+                            <!-- Contenido de la primera columna -->
+                            <p>$@libro.precio</p>
+                            
+                        </div>
+                        <hr />
+                    }
+                    <div class="col-md-6">
+                        <!-- Contenido de la primera columna -->
+
+                        <p>Total (USD)</p>
+                    </div>
+
+                    <div class="col-md-6 d-flex justify-content-end">
+                        <!-- Contenido de la segunda columna -->
+                        <p>$@ViewData["total_precio"]</p>
+                    </div>
+
+                </div>
+                <form asp-action="CerrarVenta">
+                    @Html.Hidden("id_pedido", @ViewData["id_pedido"])
+                    <button class="btn btn-success w-100 text-black" style="background-color:#7CC6ED">Cerrar venta</button>
+                </form>
             </div>
         </div>
     </div>
-
-</form>
+</div>
+    </div>

@@ -32,7 +32,7 @@ namespace L02P02_2021EM650_2021MP602.Controllers
             _clientesContext.PedidoEncabezados.Add(pedidoEncabezado);
             _clientesContext.SaveChanges();
 
-            return RedirectToAction("Index" , "Libros");
+            return RedirectToAction("Index" , "Libros", new { id = pedidoEncabezado.Id});
         }
 
     }

@@ -3,7 +3,7 @@
         <div class="col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <h5>Libros</h5>
+                    <h5 style="color: #525AF2">Libros</h5>
                     <div class="card">
                         <div class="card-body">
                             <table class="table">
@@ -31,37 +31,42 @@
             </div>
         </div>
         <div class="col-sm-6">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h5>Total Libros</h5>
-                </div>
-                <div class="col-sm-6 d-flex justify-content-end">
-                    <style>
-                        .circle {
-                            width: 30px;
-                            height: 30px;
-                            border-radius: 50%;
-                            background-color: #525AF2;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            color: white;
-                            font-weight: bold;
-                        }
-                    </style>
-                    <div class="circle">
-                        @ViewData["TotalLibros"]
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h5 style="color: #525AF2">Total Libros</h5>
+                    </div>
+                    <div class="col-sm-6 d-flex justify-content-end">
+                        <style>
+                            .circle {
+                                width: 30px;
+                                height: 30px;
+                                border-radius: 50%;
+                                background-color: #525AF2;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                color: white;
+                                font-weight: bold;
+                            }
+                        </style>
+                        <div class="circle">
+                            @ViewData["TotalLibros"]
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <p>Total (USD)</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <b><p>Total (USD)</p></b>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-end">
+                        <p>$@ViewData["Total"]</p>
+                    </div>
                 </div>
-                <div class="col-md-6 d-flex justify-content-end">
-                    <p>@ViewData["TotalUSD"]</p>
-                </div>
-                <input type="submit" class="btn btn-success w-100 text-black" style="background-color:#7CC6ED" value="Completar">
+                <form asp-action="CompletarPedido">
+                    @Html.Hidden("id_pedido", ViewData["IdPedido"])
+                    <input type="submit" class="btn btn-success w-100 text-black" style="background-color:#7CC6ED" value="Completar">
+                </form>
             </div>
         </div>
     </div>

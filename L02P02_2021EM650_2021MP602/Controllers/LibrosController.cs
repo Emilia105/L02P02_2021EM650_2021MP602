@@ -13,10 +13,19 @@ namespace L02P02_2021EM650_2021MP602.Controllers
         {
             _librosContext = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(int id)
         {
+            var librosA = (from p in _librosContext.PedidoDetalles
+                           join l in _librosContext.Libros on p.IdLibro equals l.Id
+                           join a in _librosContext.Autores on l.IdAutor equals a.Id
+                           where p.IdPedido == id
+                           group l by p.IdPedido into g
+                           select new
+                           {
+                               suma = g.Sum(i => i.Precio),
+                               total = g.Count()
+                           }).ToList();
 
-            string nombreAutor = "Autor";
             var libros = (from l in _librosContext.Libros
                           join a in _librosContext.Autores on l.IdAutor equals a.Id
 
@@ -28,15 +37,17 @@ namespace L02P02_2021EM650_2021MP602.Controllers
                               precioL = l.Precio
                           }).ToList();
 
-            ViewData["autor"] = nombreAutor;
             ViewData["libros"] = libros;
+            ViewData["IdPedido"] = id;
+            ViewData["TotalLibros"] = librosA.Count() > 0 ? librosA[0].total : 0;
+            ViewData["Total"] = librosA.Count() > 0 ? librosA[0].suma : 0;
             return View();
 
         }
         public IActionResult AgregarLibros(int IdPedido, int IdLibro)
         {
             // Obtener el pedido encabezado
-            var pedidoEncabezado = _librosContext.PedidoEncabezados.Find(IdPedido);
+            var pedidoEncabezado = _librosContext.PedidoEncabezados.FirstOrDefault(p => p.Id == IdPedido);
             if (pedidoEncabezado == null)
             {
                 return NotFound("valiendo");
@@ -51,15 +62,31 @@ namespace L02P02_2021EM650_2021MP602.Controllers
             // Crear un nuevo detalle de pedido
             PedidoDetalle detalle = new PedidoDetalle
             {
-                Id = IdPedido,
-                IdLibro = IdLibro
+                IdPedido = IdPedido,
+                IdLibro = IdLibro,
+                CreatedAt = DateTime.Now,
+
             };
 
             _librosContext.PedidoDetalles.Add(detalle);
+
+            decimal precioLibro = _librosContext.Libros.FirstOrDefault(l => l.Id == IdLibro)?.Precio ?? 0;
+            PedidoEncabezado? pe = _librosContext.PedidoEncabezados.SingleOrDefault(p => p.Id == IdPedido);
+            pe.Total += precioLibro;
+
             _librosContext.SaveChanges();
 
-
-            return View("Index");
+            return RedirectToAction("Index", "Libros", new { id = IdPedido });
         }
-    }    
+
+        public IActionResult CompletarPedido(CompletarPedidoModel model)
+        {
+            return RedirectToAction("Index", "Pedidos", new { id = model.id_pedido });
+        }
+    }
+
+    public class CompletarPedidoModel
+    {
+        public int id_pedido { get; set; }
+    }
 }
